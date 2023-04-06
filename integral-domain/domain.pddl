@@ -1,4 +1,5 @@
-(define (domain COMMRING)
+
+(define (domain INTEGRALDOMAIN)
   (:requirements :strips :adl)
 
   (:predicates (equal ?a ?b)
@@ -131,6 +132,43 @@
     	     :effect (and (equal ?aPLUSbTIMESc ?acPLUSbc)))
 
 	; =========================================================================
+    ; INTEGRAL DOMAIN AXIOMS
+
+    ; if ab = 0,then a = 0 and or b = 0
+    (:action integraldom-axiom
+    	     :parameters (?ab ?a ?b)
+    	     :precondition (and 
+    	        (isprod ?ab ?a ?b)
+                (iszero ?ab))
+    	     :effect (oneof 
+                (and 
+                    (when (assumenonzero ?a) (contradiction))
+                    (iszero ?a)
+                    (when (assumenonzero ?b) (contradiction))
+                    (iszero ?b)) 
+                (and 
+                    (when (assumenonzero ?a) (contradiction))
+                    (iszero ?a)
+                    (when (assumezero ?b) (contradiction)) 
+                    (not (iszero ?b)))
+                (and 
+                    (when (assumezero ?a) (contradiction))
+                    (not (iszero ?a)) 
+                    (when (assumenonzero ?b) (contradiction))
+                    (iszero ?b))))
+
+	; if a \= 0 and b \= 0, then ab \= zero
+    (:action integraldom-set-zero
+    	     :parameters (?ab ?a ?b)
+    	     :precondition (and 
+    	        (isprod ?ab ?a ?b)
+                (not (iszero ?a))
+                (not (iszero ?b)))      
+            :effect (and
+                (when (assumezero ?ab) (contradiction))
+                (not (iszero ?ab))))
+
+	; =========================================================================
 	; SECTION 1: EQUALITY
     	     
 	; if a = b then b = a
@@ -162,7 +200,7 @@
     	     :precondition (and (equal ?a ?b) (iszero ?z))
     	     :effect (and (issum ?a ?b ?z)))
 
-	; if a = b and a = 0 or b = 0, then a = 0 and b = 0 ;
+	; if a = b and a = 0 or b = 0, then a = 0 and b = 0 ; TODO planner really struggles
     (:action set-zero
     	     :parameters (?a ?b)
     	     :precondition (and 
@@ -176,7 +214,7 @@
                 (when (assumenonzero ?b) (contradiction))
                 (iszero ?b)))
     
-    ; if a = 0 or b = 0, then ab = 0 ;
+    ; if a = 0 or b = 0, then ab = 0 ; TODO planner really struggles
 	(:action set-zero-prod
     	     :parameters (?ab ?a ?b)
     	     :precondition (and 

@@ -2,23 +2,25 @@
 ; -1 * a = -a
 
 (:domain COMMRING)
-; WIP INCOMPLETE
 
-(:objects a i mini zero iPLUSmini iPLUSminiTIMESa zeroTIMESa)
+(:objects a i mini mina zero zeroTIMESa iTIMESa miniTIMESa iTIMESaPLUSminiTIMESa)
 
 (:init 
        (ismultidentity i)
        (isadditiveinverse i mini)
+       (isadditiveinverse a mina)
 
        (iszero zero)
        (allowzeroprod)
 
-       (issum iPLUSmini i mini)
-       (isprod iPLUSminiTIMESa iPLUSmini a)
-
        (isprod zeroTIMESa zero a)
+       (isprod iTIMESa i a)
+       (isprod miniTIMESa mini a)
+
+       (issum iTIMESaPLUSminiTIMESa iTIMESa miniTIMESa)
+
     )
 
-(:goal (and (equal iPLUSminiTIMESa zeroTIMESa)))
+(:goal (and (equal miniTIMESa mina)))
 
 )
