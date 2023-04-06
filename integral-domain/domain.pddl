@@ -1,4 +1,4 @@
-
+	
 (define (domain INTEGRALDOMAIN)
   (:requirements :strips :adl)
 
@@ -134,7 +134,7 @@
 	; =========================================================================
     ; INTEGRAL DOMAIN AXIOMS
 
-    ; if ab = 0,then a = 0 and or b = 0
+	; if ab = 0,then a = 0 and or b = 0
     (:action integraldom-axiom
     	     :parameters (?ab ?a ?b)
     	     :precondition (and 
@@ -190,7 +190,6 @@
      	    :precondition (and (equal ?a ?b) (equal ?b ?c))
      	    :effect (and (equal ?a ?c)))
 
-
 	; =========================================================================
 	; SECTION 2: ZEROS
 
@@ -213,50 +212,9 @@
                 (iszero ?a) 
                 (when (assumenonzero ?b) (contradiction))
                 (iszero ?b)))
-    
-    ; if a = 0 or b = 0, then ab = 0 ; TODO planner really struggles
-	(:action set-zero-prod
-    	     :parameters (?ab ?a ?b)
-    	     :precondition (and 
-			 	(allowzeroprod)
-    	        (isprod ?ab ?a ?b)
-    	        (or 
-					(iszero ?a) 
-					(iszero ?b)))
-    	     :effect (and 
-                (when (assumenonzero ?ab) (contradiction))
-                (iszero ?ab)))
-	
+
 	; =========================================================================
 	; SECTION 3: SUMS
-
-	; if a = b and b = c + d, then a = c + d
-	(:action set-sum
-    	     :parameters (?a ?b ?c ?d)
-    	     :precondition (and (equal ?a ?b)(issum ?b ?c ?d))
-    	     :effect (and (issum ?a ?c ?d)))
-
-
-    ; if a = b + c and b = d, then a = d + c
-	(:action replace-sum
-    	     :parameters (?a ?b ?c ?d)
-    	     :precondition (and (issum ?a ?b ?c) (equal ?b ?d))
-    	     :effect (and (issum ?a ?d ?c)))
-
-
-	; if a = b + c, then a = c + b            
-    (:action swap-sum
-    	     :parameters (?a ?b ?c)
-    	     :precondition (and (issum ?a ?b ?c))
-    	     :effect (and (issum ?a ?c ?b)))  
-
-
-	; if a = b + c and d = b + c, then a = d
-    (:action set-equal-by-sum
-     	    :parameters (?a ?d ?b ?c)
-     	    :precondition (and (issum ?a ?b ?c) (issum ?d ?b ?c))
-     	    :effect (and (equal ?a ?d)))
-
 
 	; if a = b then a + c = b + c
 	(:action add-element-to-both-sides-of-equality
@@ -269,39 +227,6 @@
 
 	; =========================================================================
 	; SECTION 4: PRODUCTS
-
-	; if a = b and b = cd, then a = cd
-	(:action set-prod
-    	     :parameters (?a ?b ?c ?d)
-    	     :precondition (and (equal ?a ?b)(isprod ?b ?c ?d))
-    	     :effect (and (isprod ?a ?c ?d)))
-
-    ; if ab = a * b then ab = b * a
-    (:action swap-prod
-    	     :parameters (?ab ?a ?b)
-    	     :precondition (and (isprod ?ab ?a ?b))
-            :effect (and (isprod ?ab ?b ?a)))
-
-	; if a = bc and b = d, then a = dc
-	(:action replace-prod
-    	     :parameters (?a ?b ?c ?d)
-    	     :precondition (and (isprod ?a ?b ?c) (equal ?b ?d))
-    	     :effect (and (isprod ?a ?d ?c)))
-	
-	; if a = bc and d = bc, then a = d
-    (:action set-equal-by-prod
-     	    :parameters (?a ?d ?b ?c)
-     	    :precondition (and (isprod ?a ?b ?c) (isprod ?d ?b ?c))
-     	    :effect (and (equal ?a ?d)))
-
-	; if a = b then ac = bc
-	(:action multipy-element-both-sides-of-equality
-    	     :parameters (?ac ?bc ?a ?b ?c)
-    	     :precondition (and 
-			 	(isprod ?ac ?a ?c)
-				(isprod ?bc ?b ?c)
-			 	(equal ?a ?b))
-    	     :effect (and (equal ?ac ?bc)))
 
 	; =========================================================================
 	; SECTION 5: INVERSES
@@ -316,18 +241,6 @@
 		)
 		:effect (and 
 			(equal ?aPLUSb ?c)
-		))
-
-	; -b * c = b * -c
-	(:action factor-out-neg
-		:parameters (?minbTIMESc ?b ?minb ?c ?minc)
-		:precondition (and 
-			(isprod ?minbTIMESc ?minb ?c)
-			(isadditiveinverse ?b ?minb)
-			(isadditiveinverse ?c ?minc)
-		)
-		:effect (and 
-			(isprod ?minbTIMESc ?b ?minc)
 		))
 
 )
