@@ -18,3 +18,6 @@ In this domain, we model all the ring axioms, integral domain axioms, and a subs
 
 To run the model:
 > prp <domain_file.pddl> <problem_file.pddl>
+
+Alternatively:
+> prppp <domain_file.pddl> <problem_file.pddl>
