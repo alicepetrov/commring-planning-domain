@@ -1,0 +1,5 @@
+(factor-out-neg minitimesa i mini a mina)
+(multiplicative-identity-axiom mina i)
+(swap-prod minitimesa i mina)
+(set-equal-by-prod minitimesa mina mina i)
+; cost = 4 (unit cost)

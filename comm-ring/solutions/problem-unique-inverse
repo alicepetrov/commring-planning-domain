@@ -1,0 +1,7 @@
+(set-equal-to-self b1)
+(swap-sum zero a b1)
+(add-zero b1 b1 zero)
+(refactor-sum b1 b1 zero a b2 zero)
+(swap-sum b1 zero b2)
+(zero-axiom b1 b2 zero)
+; cost = 6 (unit cost)

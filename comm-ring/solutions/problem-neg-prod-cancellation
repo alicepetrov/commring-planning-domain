@@ -1,0 +1,4 @@
+(additive-inverse-axiom zero a mina)
+(factor-out-neg ab mina a b minb)
+(set-equal-by-prod minatimesminb ab mina minb)
+; cost = 3 (unit cost)

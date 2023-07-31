@@ -1,0 +1,3 @@
+(set-equal-to-self zero)
+(add-zero zero zero zero)
+; cost = 2 (unit cost)

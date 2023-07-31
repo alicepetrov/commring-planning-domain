@@ -11,7 +11,6 @@
 			   (undeclared ?a)
 			   (ismultidentity ?i)
 			   (allowzeroprod)
-			   (allownegprod)
 			   (contradiction))
 
 	; =========================================================================
@@ -275,41 +274,31 @@
 			 	(equal ?a ?b))
     	     :effect (and (equal ?ac ?bc)))
 
-	; if a = bc and c = de and f = bd then a = fe
-	(:action refactor-prod
-    	     :parameters (?a ?b ?c ?d ?e ?f)
-    	     :precondition (and 
-				(isprod ?a ?b ?c) 
-				(isprod ?c ?d ?e)
-				(isprod ?f ?b ?d))
-    	     :effect (and (isprod ?a ?f ?e)))
-
 	; =========================================================================
 	; SECTION 5: INVERSES
 
-	; if a + b and b = c + (-a) , then a + b = a + c + (-a) = a + (-a) + c = c
-	;(:action reduce-additive-inverse
-	;	:parameters (?aPLUSb ?a ?b ?c ?mina)
-	;	:precondition (and 
-	;		(issum ?aPLUSb ?a ?b)
-	;		(issum ?b ?c ?mina)
-	;		(isadditiveinverse ?a ?mina)
-	;	)
-	;	:effect (and 
-	;		(equal ?aPLUSb ?c)
-	;	))
-
-	; -a * b = a * -b
-	(:action factor-out-neg
-		:parameters (?minaTIMESb ?a ?mina ?b ?minb)
+	; if a + b and b = c + (-a) , then a + b = a + c + (-a) = c
+	(:action reduce-additive-inverse
+		:parameters (?aPLUSb ?a ?b ?c ?mina)
 		:precondition (and 
-			(allownegprod)
-			(isprod ?minaTIMESb ?mina ?b)
+			(issum ?aPLUSb ?a ?b)
+			(issum ?b ?c ?mina)
 			(isadditiveinverse ?a ?mina)
-			(isadditiveinverse ?b ?minb)
 		)
 		:effect (and 
-			(isprod ?minaTIMESb ?a ?minb)
+			(equal ?aPLUSb ?c)
+		))
+
+	; -b * c = b * -c
+	(:action factor-out-neg
+		:parameters (?minbTIMESc ?b ?minb ?c ?minc)
+		:precondition (and 
+			(isprod ?minbTIMESc ?minb ?c)
+			(isadditiveinverse ?b ?minb)
+			(isadditiveinverse ?c ?minc)
+		)
+		:effect (and 
+			(isprod ?minbTIMESc ?b ?minc)
 		))
 
 )
