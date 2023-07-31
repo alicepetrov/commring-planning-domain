@@ -287,18 +287,6 @@
 	; =========================================================================
 	; SECTION 5: INVERSES
 
-	; if a + b and b = c + (-a) , then a + b = a + c + (-a) = a + (-a) + c = c
-	;(:action reduce-additive-inverse
-	;	:parameters (?aPLUSb ?a ?b ?c ?mina)
-	;	:precondition (and 
-	;		(issum ?aPLUSb ?a ?b)
-	;		(issum ?b ?c ?mina)
-	;		(isadditiveinverse ?a ?mina)
-	;	)
-	;	:effect (and 
-	;		(equal ?aPLUSb ?c)
-	;	))
-
 	; -a * b = a * -b
 	(:action factor-out-neg
 		:parameters (?minaTIMESb ?a ?mina ?b ?minb)
