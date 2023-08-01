@@ -1,7 +1,7 @@
 (define (problem ZERO-SUM)
 
 (:domain COMMRING)
-; a(-b) = -ab
+; a * 0 = 0
 
 (:objects a b zero mina minb ab minab aTIMESminb abPLUSminab minbPLUSb aTIMESminbPLUSb aTIMESminbPLUSab aTIMESzero minaTIMESzero x)
 
