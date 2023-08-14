@@ -1,4 +1,4 @@
-(define (problem ZERO-PROD)
+(define (problem NEG-MULT-ID)
 ; -1 * a = -a
 
 (:domain COMMRING)
